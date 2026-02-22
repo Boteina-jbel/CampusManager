@@ -84,4 +84,21 @@ public class EnrollmentService {
         return false;
     }
     
+    // 5. List all courses of a student (optional)
+    public void listStudentCourses(Student student) {
+        if (student.getEnrollments().isEmpty()) {
+            System.out.println(student.getFullName() + " is not enrolled in any courses.");
+            return;
+        }
+        System.out.println("Courses of " + student.getFullName() + ":");
+        for (Enrollment enrollment : student.getEnrollments()) {
+            System.out.println("- " + enrollment.getCourse().getName());
+        }
+    }
+
+    // 6. List all students in a course (optional)
+    public void listCourseStudents(Course course) {
+    	
+    }
+    
 }
