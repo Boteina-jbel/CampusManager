@@ -110,5 +110,4 @@ public class EnrollmentService {
             System.out.println("- " + enrollment.getStudent().getFullName());
         }
     }
-    
 }
