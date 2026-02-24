@@ -23,4 +23,25 @@ public class StudentService {
         System.out.println("Student added successfully.");
     }
 	
+    public void removeStudent(Student student) {
+
+        for (int i = 0; i < students.size(); i++) {
+
+            if (students.get(i).getCNE().equals(student.getCNE())) {
+                students.remove(i);
+                System.out.println("Student removed successfully.");
+                return;
+            }
+        }
+        System.out.println("Student not found.");
+    }
+    
+    public Student findStudentByCNE(String cne) {
+		return null;
+    	
+    }
+    public Student listAllStudents(){
+		return null;
+    	
+    }
 }
