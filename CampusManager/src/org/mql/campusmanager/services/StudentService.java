@@ -45,7 +45,8 @@ public class StudentService {
     	return null;
     }
     
-    public Vector<Student> listAllStudents(){
-		return students;
+    public Vector<Student> listAllStudents() {
+    	//return students; // Do not return the original list to avoid exposing internal data.
+        return new Vector<>(students); // safe copy
     }
 }
