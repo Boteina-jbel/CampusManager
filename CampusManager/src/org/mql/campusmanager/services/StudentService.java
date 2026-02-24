@@ -37,11 +37,15 @@ public class StudentService {
     }
     
     public Student findStudentByCNE(String cne) {
-		return null;
-    	
+    	for(Student student : students) {
+    		if(student.getCNE().equals(cne)) {
+    			return student;
+    		}
+    	}
+    	return null;
     }
-    public Student listAllStudents(){
-		return null;
-    	
+    
+    public Vector<Student> listAllStudents(){
+		return students;
     }
 }
