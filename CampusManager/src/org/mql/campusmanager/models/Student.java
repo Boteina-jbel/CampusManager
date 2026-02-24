@@ -13,11 +13,11 @@ public class Student extends Person {
         this.enrollments = new Vector<>();
     }
 
-    public String getCne() { 
+    public String getCNE() { 
     	return CNE; 
     }
     
-    public void setCne(String CNE) { 
+    public void setCNE(String CNE) { 
     	this.CNE = CNE; 
     }
 
