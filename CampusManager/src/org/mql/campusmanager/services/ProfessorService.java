@@ -33,7 +33,19 @@ public class ProfessorService {
 		}
 		System.out.println("Professor not found.");
 	}
+	public Professor findProfessorByMatricule(String matricule) {
+		for(Professor p : professors) {
+			if(p.getMatricule().equals(matricule)) {
+				return p;
+			}
+		}
+		return null;
+	}
 	
+	public Vector<Professor> listAllProfessors(){
+		//return professors;
+		return new Vector<>(professors);
+	}
 	
 	
 }
