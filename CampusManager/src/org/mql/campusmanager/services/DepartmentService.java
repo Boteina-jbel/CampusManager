@@ -43,5 +43,7 @@ public class DepartmentService {
 		return null;
 	}
 	
-	
+	public Vector<Department> listAllDepartments(){
+		return new Vector<>(departments);
+	}
 }
