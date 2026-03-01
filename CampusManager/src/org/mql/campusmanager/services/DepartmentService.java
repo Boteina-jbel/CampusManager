@@ -33,4 +33,15 @@ public class DepartmentService {
 		}
 		System.out.println("Department not found.");
 	}
+	
+	public Department findDepartmentByName(String name) {
+		for(Department d : departments) {
+			if(d.getName().equals(name)) {
+				return d;
+			}
+		}
+		return null;
+	}
+	
+	
 }
