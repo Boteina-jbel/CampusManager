@@ -22,4 +22,15 @@ public class DepartmentService {
 		departments.add(department);
 		System.out.println("Department added successfully.");
 	}
+	
+	public void removeDepartment(String name) {
+		for(int i = 0; i < departments.size(); i++) {
+			if(departments.get(i).getName().equals(name)) {
+				departments.remove(i);
+				System.out.println("Department removed successfully.");
+                return;
+			}
+		}
+		System.out.println("Department not found.");
+	}
 }
