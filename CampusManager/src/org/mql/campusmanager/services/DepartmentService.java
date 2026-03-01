@@ -3,6 +3,7 @@ package org.mql.campusmanager.services;
 import java.util.Vector;
 
 import org.mql.campusmanager.models.Department;
+import org.mql.campusmanager.models.Professor;
 
 public class DepartmentService {
 	
@@ -12,26 +13,24 @@ public class DepartmentService {
 		departments = new Vector<>();
 	}
 	
-	public void addDepartment(Department department) {
+	public boolean addDepartment(Department department) {
 		for(Department d : departments) {
 			if(d.getName().equals(department.getName())) {
-				System.out.println("Department " + department.getName() + "already exists");
-				return;
+				return false;
 			}
 		}
 		departments.add(department);
-		System.out.println("Department added successfully.");
+		return true;
 	}
 	
-	public void removeDepartment(String name) {
+	public boolean removeDepartment(String name) {
 		for(int i = 0; i < departments.size(); i++) {
 			if(departments.get(i).getName().equals(name)) {
 				departments.remove(i);
-				System.out.println("Department removed successfully.");
-                return;
+                return true;
 			}
 		}
-		System.out.println("Department not found.");
+		return false;
 	}
 	
 	public Department findDepartmentByName(String name) {
@@ -45,5 +44,18 @@ public class DepartmentService {
 	
 	public Vector<Department> listAllDepartments(){
 		return new Vector<>(departments);
+	}
+	
+	public boolean assignProfessorToDepartment(Professor professor, Department department) {
+	    if (professor == null || department == null) {
+	        return false;
+	    }
+	    for (Professor p : department.getProfessors()) {
+	        if (p.getMatricule().equals(professor.getMatricule())) {
+	            return false; // already assigned
+	        }
+	    }
+	    department.addProfessor(professor);
+	    return true;
 	}
 }
