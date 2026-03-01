@@ -2,6 +2,7 @@ package org.mql.campusmanager.services;
 
 import java.util.Vector;
 
+import org.mql.campusmanager.models.Course;
 import org.mql.campusmanager.models.Department;
 import org.mql.campusmanager.models.Professor;
 
@@ -57,5 +58,19 @@ public class DepartmentService {
 	    }
 	    department.addProfessor(professor);
 	    return true;
+	}
+	
+	public void addCourseToDepartment(Course course, Department department) {
+		
+	}
+	
+	public Vector<Professor> listDepartmentProfessors(Department department){
+		return null;
+		
+	}
+	
+	public Vector<Course> listDepartmentCourses(Department department){
+		return null;
+		
 	}
 }
