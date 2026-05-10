@@ -21,8 +21,29 @@ class StudentServiceTests {
 	}
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testAddStudentSuccess() {
+		// Arrange
+	    Student newStudent = new Student(
+	        "Sara",
+	        "Ali",
+	        "sara@gmail.com",
+	        "K222222222"
+	    );
+	    // Act
+	    service.addStudent(newStudent);
+	    // Assert
+	    assertEquals(2, service.listAllStudents().size());
+	}
+	
+	@Test
+	void testFindStudentByCNESuccess() {
+		//Arrange
+		
+		//Act
+		Student found = service.findStudentByCNE("K111111111");
+		//Assert
+		assertNotNull(found);
+		assertEquals(student.getCNE(), found.getCNE());
 	}
 
 }
