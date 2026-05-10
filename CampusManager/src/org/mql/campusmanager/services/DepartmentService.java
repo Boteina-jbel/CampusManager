@@ -1,5 +1,6 @@
 package org.mql.campusmanager.services;
 
+import java.util.List;
 import java.util.Vector;
 
 import org.mql.campusmanager.models.Course;
@@ -60,17 +61,25 @@ public class DepartmentService {
 	    return true;
 	}
 	
-	public void addCourseToDepartment(Course course, Department department) {
-		
+	public boolean addCourseToDepartment(Course course, Department department) {
+		if (course == null || department == null) {
+	        return false;
+	    }
+	    for (Course c : department.getCourses()) {
+
+	        if (c.getCode().equals(course.getCode())) {
+	            return false; // course already exists
+	        }
+	    }
+	    department.addCourse(course);
+	    return true;
 	}
 	
-	public Vector<Professor> listDepartmentProfessors(Department department){
-		return null;
-		
+	public List<Professor> listDepartmentProfessors(Department department) {
+	    return new Vector<>(department.getProfessors());
 	}
 	
-	public Vector<Course> listDepartmentCourses(Department department){
-		return null;
-		
+	public List<Course> listDepartmentCourses(Department department){
+		return new Vector<>(department.getCourses());
 	}
 }

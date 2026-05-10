@@ -5,13 +5,15 @@ import java.util.Vector;
 
 public class Course {
 	
+	private String code;
     private String name;
     private int credits;
     private int capacity;
     private Professor professor;
     private List<Enrollment> enrollments;
 
-    public Course(String name, int credits, int capacity, Professor professor) {
+    public Course(String code, String name, int credits, int capacity, Professor professor) {
+        this.code = code;
         this.name = name;
         this.credits = credits;
         this.capacity = capacity;
@@ -23,6 +25,9 @@ public class Course {
     public int getCredits() { return credits; }
     public int getCapacity() { return capacity; }
     public Professor getProfessor() { return professor; }
+    public String getCode() {
+        return code;
+    }
     
     public void setProfessor(Professor professor) {
 		this.professor = professor;
