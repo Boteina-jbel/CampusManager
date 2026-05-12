@@ -12,28 +12,30 @@ public class StudentService {
         students = new Vector<>();
     }
     
-    public void addStudent(Student student) {
+    public boolean addStudent(Student student) {
         for (Student s : students) {
             if (s.getCNE().equals(student.getCNE())) {
-                System.out.println("Student with this CNE already exists.");
-                return;
+                return false;
             }
         }
         students.add(student);
-        System.out.println("Student added successfully.");
+        return true;
     }
 	
-    public void removeStudent(Student student) {
+    public boolean removeStudent(Student student) {
 
+    	if (student == null) {
+            return false;
+        }
+    	
         for (int i = 0; i < students.size(); i++) {
 
             if (students.get(i).getCNE().equals(student.getCNE())) {
                 students.remove(i);
-                System.out.println("Student removed successfully.");
-                return;
+                return true;
             }
         }
-        System.out.println("Student not found.");
+        return false;
     }
     
     public Student findStudentByCNE(String cne) {
