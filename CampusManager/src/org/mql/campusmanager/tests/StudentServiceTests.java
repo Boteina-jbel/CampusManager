@@ -32,8 +32,10 @@ class StudentServiceTests {
 	        "K222222222"
 	    );
 	    // Act
-	    service.addStudent(newStudent);
+	    boolean result = service.addStudent(newStudent);
+	    
 	    // Assert
+	    assertTrue(result);
 	    assertEquals(2, service.listAllStudents().size());
 	}
 	
