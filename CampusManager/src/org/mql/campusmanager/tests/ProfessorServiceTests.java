@@ -1,6 +1,9 @@
 package org.mql.campusmanager.tests;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Vector;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,18 +29,44 @@ class ProfessorServiceTests {
 		//Arrange
 		Professor newprofessor = new Professor("Kamal", "Kamal", "kamal@gmail.com", "KF2378");
 		//Act
-		service.addProfessor(newprofessor);
+		boolean result = service.addProfessor(newprofessor);
 		//Assert
+		assertTrue(result);
 		assertEquals(2, service.listAllProfessors().size());
 	}
 	
 	@Test
 	void testRemoveProfessorSuccess() {
 		//Arrange
+		Professor newprofessor = new Professor("Kamal", "Kamal", "kamal@gmail.com", "KF2378");
+		//Act
+		service.removeProfessor(newprofessor);
+		//Assert
+		assertEquals(1, service.listAllProfessors().size());
+	}
+	
+	@Test
+	void testFindProfessorByMatricule() {
+		//Arrange
 		
 		//Act
+		Professor found = service.findProfessorByMatricule("LJ2825");
 		
 		//Assert
+		assertNotNull(found);
+		assertEquals(professor.getMatricule(), found.getMatricule());
+	}
+	
+	@Test
+	void testListAllProfessors() {
+		//Arrange
+		Professor newprofessor = new Professor("Kamal", "Kamal", "kamal@gmail.com", "KF2378");
+		service.addProfessor(newprofessor);
+		//Act
+		Vector<Professor> professors = service.listAllProfessors();
+		//Assert
+		assertNotNull(professors);
+		assertEquals(2, professors.size());
 	}
 
 }
