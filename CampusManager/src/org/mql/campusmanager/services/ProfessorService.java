@@ -12,26 +12,24 @@ public class ProfessorService {
 		professors = new Vector<>();
 	}
 	
-	public void addProfessor(Professor professor) {
+	public boolean addProfessor(Professor professor) {
 		for(Professor p : professors) {
 			if(p.getMatricule().equals(professor.getMatricule())) {
-				System.out.println("Professor " + professor.getFullName() + "already exists");
-				return;
+				return false;
 			}
 		}
 		professors.add(professor);
-		System.out.println("Professor added successfully.");
+		return true;
 	}
 	
-	public void removeProfessor(Professor professor) {
+	public boolean removeProfessor(Professor professor) {
 		for(int i = 0; i<professors.size(); i++) {
 			if(professors.get(i).getMatricule().equals(professor.getMatricule())) {
 				professors.remove(i);
-				System.out.println("Professor removed successfully.");
-                return;
+                return true;
 			}
 		}
-		System.out.println("Professor not found.");
+		return false;
 	}
 	
 	public Professor findProfessorByMatricule(String matricule) {
