@@ -30,5 +30,14 @@ class CourseServiceTests {
 		//Assert
 		assertFalse(result);
 	}
-
+	
+	@Test
+	void testassignCourseSuccess() {
+		//Arrange
+		
+		//Act
+		boolean result = service.assignCourse(professor, course);
+		//Assert
+		assertTrue(result);
+	}
 }
