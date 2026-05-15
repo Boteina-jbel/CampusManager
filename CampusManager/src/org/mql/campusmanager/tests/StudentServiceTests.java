@@ -40,6 +40,16 @@ class StudentServiceTests {
 	}
 	
 	@Test
+	void testAddStudentFailure() {
+		//Arrange
+		service.addStudent(student);
+		//Act
+		boolean result = service.addStudent(student);
+		//Assert
+		assertFalse(result);
+	}
+	
+	@Test
 	void testFindStudentByCNESuccess() {
 		//Arrange
 		
@@ -49,9 +59,19 @@ class StudentServiceTests {
 		assertNotNull(found);
 		assertEquals(student.getCNE(), found.getCNE());
 	}
+	
+	@Test
+	void testFindStudentByCNEFailure() {
+		//Arrange
+		
+		//Act
+		Student found = service.findStudentByCNE("K222222222");
+		//Assert
+		assertNull(found);
+	}
 
 	@Test
-	void testRemoveStudent() {
+	void testRemoveStudentSuccess() {
 		//Arrange
 		Student newStudent = new Student(
 		        "Sara",
@@ -64,6 +84,31 @@ class StudentServiceTests {
 		service.removeStudent(student);
 		//Assert
 		assertEquals(1, service.listAllStudents().size());
+	}
+	
+	@Test
+	void testRemoveStudentNotFound() {
+		//Arrange
+		Student student = null;
+		//Act
+		boolean result = service.removeStudent(student);
+		//Assert
+		assertFalse(result);
+	}
+	
+	@Test
+	void testRemoveStudentFailure() {
+		//Arrange
+		Student newStudent = new Student(
+		        "Sara",
+		        "Ali",
+		        "sara@gmail.com",
+		        "K222222222"
+		    );
+		//Act
+		boolean result = service.removeStudent(newStudent);
+		//Assert
+		assertFalse(result);
 	}
 	
 	@Test
