@@ -3,11 +3,13 @@ package org.mql.campusmanager.tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mql.campusmanager.models.Course;
 import org.mql.campusmanager.models.Professor;
 import org.mql.campusmanager.services.CourseService;
 
+@DisplayName("Senario de test pour la classe metier Course Service")
 class CourseServiceTests {
 
 	private CourseService service;
