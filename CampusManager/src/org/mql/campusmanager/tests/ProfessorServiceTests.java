@@ -36,9 +36,20 @@ class ProfessorServiceTests {
 	}
 	
 	@Test
+	void testAddProfessorFailure() {
+		//Arrange
+		service.addProfessor(professor);
+		//Act
+		boolean result = service.addProfessor(professor);
+		//Assert
+		assertFalse(result);
+	}
+	
+	@Test
 	void testRemoveProfessorSuccess() {
 		//Arrange
 		Professor newprofessor = new Professor("Kamal", "Kamal", "kamal@gmail.com", "KF2378");
+		service.addProfessor(newprofessor);
 		//Act
 		service.removeProfessor(newprofessor);
 		//Assert
@@ -46,7 +57,17 @@ class ProfessorServiceTests {
 	}
 	
 	@Test
-	void testFindProfessorByMatricule() {
+	void testRemoveProfessorFailure() {
+		//Arrange
+		Professor newprofessor = new Professor("Kamal", "Kamal", "kamal@gmail.com", "KF2378");
+		//Act
+		boolean result = service.removeProfessor(newprofessor);
+		//Assert
+		assertFalse(result);
+	}
+	
+	@Test
+	void testFindProfessorByMatriculeSuccess() {
 		//Arrange
 		
 		//Act
@@ -55,6 +76,16 @@ class ProfessorServiceTests {
 		//Assert
 		assertNotNull(found);
 		assertEquals(professor.getMatricule(), found.getMatricule());
+	}
+	
+	@Test
+	void testFindProfessorByMatriculeFailure() {
+		//Arrange
+		
+		//Act
+		Professor found = service.findProfessorByMatricule("AB1234");
+		//Assert
+		assertNull(found);
 	}
 	
 	@Test
