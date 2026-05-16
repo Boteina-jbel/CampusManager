@@ -22,18 +22,53 @@ class EnrollmentServiceTests {
 		service = new EnrollmentService();
 		student = new Student("Boteina", "JBEL", "boteinajbel@gmail.com", "K111111111");
 		professor = new Professor("Loqman", "Loqman", "loqman@gmail.com", "LJ2825");
-		course = new Course("JS123", "JavaScript", 2, 30, professor);
+		course = new Course("JS123", "JavaScript", 2, 1, professor);
 	}
 
 	@Test
 	void testEnrollStudentAlreadyEnrolled() {
 		//Arrange
 		service.enrollStudent(student, course);
-		
 		//Act
 		boolean result = service.enrollStudent(student, course);
 		//Assert
 		assertFalse(result);
 	}
 
+	@Test
+	void testEnrollStudentCourseIsFull() {
+		//Arrange
+		Student student2 = new Student("Salma", "Salma", "salma@gmail.com", "K222222222");
+		service.enrollStudent(student, course);
+		//Act
+		boolean result = service.enrollStudent(student2, course);
+		//Assert
+		assertFalse(result);
+	}
+	
+	@Test
+	void testEnrollStudentSuccess() {
+		//Arrange
+		
+		//Act
+		boolean result = service.enrollStudent(student, course);
+		//Assert
+		assertTrue(result);
+	}
+	
+	@Test
+	void testEnrollStudentWithDifferentCourse() {
+	    // Arrange
+	    Course javaCourse = new Course("J101","Java", 2, 10, professor);
+	    Course jsCourse = new Course("JS123", "JavaScript", 2, 10, professor);
+
+	    // Student enrolled in Java
+	    service.enrollStudent(student, javaCourse);
+
+	    // Act
+	    boolean result = service.enrollStudent(student, jsCourse);
+
+	    // Assert
+	    assertTrue(result);
+	}
 }
