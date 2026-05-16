@@ -50,6 +50,16 @@ class StudentServiceTests {
 	}
 	
 	@Test
+	void testAddStudentNotFound() {
+		//Arrange
+		Student student = null;
+		//Act
+		boolean result = service.addStudent(student);
+		//Assert
+		assertFalse(result);
+	}
+	
+	@Test
 	void testFindStudentByCNESuccess() {
 		//Arrange
 		
