@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mql.campusmanager.models.Course;
-import org.mql.campusmanager.models.Enrollment;
 import org.mql.campusmanager.models.Professor;
 import org.mql.campusmanager.models.Student;
 import org.mql.campusmanager.services.EnrollmentService;
@@ -19,7 +18,6 @@ class EnrollmentServiceTests {
 	private Student student;
 	private Course course;
 	private Professor professor;
-	private Enrollment enrollment;
 
 	@BeforeEach
 	void setUp() throws Exception {
