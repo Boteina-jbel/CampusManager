@@ -94,4 +94,28 @@ class EnrollmentServiceTests {
 		assertFalse(result);
 	}
 	
+	@Test
+	void testCalculateAverageSuccess() {
+		//Arrange
+		Course javaCourse = new Course("J101","Java", 2, 10, professor);
+	    service.enrollStudent(student, javaCourse);
+		service.enrollStudent(student, course);
+		service.assignGrade(student, javaCourse, 15);
+		service.assignGrade(student, course, 17);
+		//Act
+		double result = service.calculateAverage(student);
+		//Assert
+		assertEquals(16.00, result);
+	}
+	
+	@Test
+	void testCalculateAverageNoGradesYet() {
+		//Arrange
+		service.enrollStudent(student, course);
+		//Act
+		double result = service.calculateAverage(student);
+		//Assert
+		assertEquals(0.0, result);
+		
+	}
 }
