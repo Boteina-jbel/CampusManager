@@ -71,4 +71,27 @@ class EnrollmentServiceTests {
 	    // Assert
 	    assertTrue(result);
 	}
+	
+	@Test
+	void testAssignGradeSuccess() {
+		//Arrange
+	    Course javaCourse = new Course("J101","Java", 2, 10, professor);
+	    service.enrollStudent(student, javaCourse);
+		service.enrollStudent(student, course);
+		//Act
+		boolean result = service.assignGrade(student, course, 15);
+		//Assert
+		assertTrue(result);
+	}
+	
+	@Test
+	void testAssignGradeFailure() {
+		//Arrange
+		
+		//Act
+		boolean result = service.assignGrade(student, course, 17);
+		//Assert
+		assertFalse(result);
+	}
+	
 }
