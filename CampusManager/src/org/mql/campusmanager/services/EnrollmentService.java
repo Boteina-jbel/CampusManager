@@ -30,7 +30,7 @@ public class EnrollmentService {
     }
     
  // 2. Assign or update a grade (including rattrapage)
-    public void assignGrade(Student student, Course course, double grade) {
+    public boolean assignGrade(Student student, Course course, double grade) {
         // 1️ Find existing enrollment
         for (Enrollment enrollment : student.getEnrollments()) {
             if (enrollment.getCourse().equals(course)) {
@@ -40,11 +40,12 @@ public class EnrollmentService {
                 System.out.println("Grade " + grade + " assigned to "
                         + student.getFullName() + " for course "
                         + course.getName());
-                return; // stop after finding it
+                return true; // stop after finding it
             }
         }
         // 3️ If no enrollment found
         System.out.println("Student is not enrolled in this course.");
+        return false;
     }
 
 
