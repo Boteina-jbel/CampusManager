@@ -118,4 +118,33 @@ class EnrollmentServiceTests {
 		assertEquals(0.0, result);
 		
 	}
+	
+	@Test
+	void testIsAdmitedSuccess() {
+		//Arrange
+		Course javaCourse = new Course("J101","Java", 2, 10, professor);
+	    service.enrollStudent(student, javaCourse);
+		service.enrollStudent(student, course);
+		service.assignGrade(student, javaCourse, 15);
+		service.assignGrade(student, course, 17);
+		//Act
+		boolean result = service.isAdmitted(student);
+		//Assert
+		assertTrue(result);
+		
+	}
+	
+	@Test
+	void testIsAdmitedFailure() {
+		//Arrange
+		Course javaCourse = new Course("J101","Java", 2, 10, professor);
+	    service.enrollStudent(student, javaCourse);
+		service.enrollStudent(student, course);
+		service.assignGrade(student, javaCourse, 9);
+		service.assignGrade(student, course, 8);
+		//Act
+		boolean result = service.isAdmitted(student);
+		//Assert
+		assertFalse(result);
+	}
 }
