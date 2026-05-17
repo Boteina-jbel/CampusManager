@@ -2,10 +2,13 @@ package org.mql.campusmanager.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Vector;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mql.campusmanager.models.Course;
+import org.mql.campusmanager.models.Enrollment;
 import org.mql.campusmanager.models.Professor;
 import org.mql.campusmanager.models.Student;
 import org.mql.campusmanager.services.EnrollmentService;
@@ -16,6 +19,7 @@ class EnrollmentServiceTests {
 	private Student student;
 	private Course course;
 	private Professor professor;
+	private Enrollment enrollment;
 
 	@BeforeEach
 	void setUp() throws Exception {
@@ -125,8 +129,8 @@ class EnrollmentServiceTests {
 		Course javaCourse = new Course("J101","Java", 2, 10, professor);
 	    service.enrollStudent(student, javaCourse);
 		service.enrollStudent(student, course);
-		service.assignGrade(student, javaCourse, 15);
-		service.assignGrade(student, course, 17);
+		service.assignGrade(student, javaCourse, 18);
+		service.assignGrade(student, course, 19);
 		//Act
 		boolean result = service.isAdmitted(student);
 		//Assert
@@ -146,5 +150,58 @@ class EnrollmentServiceTests {
 		boolean result = service.isAdmitted(student);
 		//Assert
 		assertFalse(result);
+	}
+	
+	@Test
+	void testListStudentCoursesSuccess() {
+		//Arrange
+		Course javaCourse = new Course("J101","Java", 2, 10, professor);
+	    service.enrollStudent(student, javaCourse);
+		service.enrollStudent(student, course);
+		//Act
+		Vector<Course> result = service.listStudentCourses(student);
+		//Assert
+		assertNotNull(result);
+		assertEquals(2, result.size());
+	    assertTrue(result.contains(javaCourse));
+	    assertTrue(result.contains(course));
+	}
+	
+	@Test
+	void testListStudentCourseFailure() {
+		//Arrange
+		Student student = null;
+		//Act
+		Vector<Course> result = service.listStudentCourses(student);
+		//Assert
+		assertNotNull(result);
+	    assertTrue(result.isEmpty());
+	}
+	
+	@Test
+	void testListCourseStudentsSuccess() {
+		//Arrange
+		Course course = new Course("JS123", "JavaScript", 2, 10, professor);
+		Student student2 = new Student("Salma", "Salma", "salma@gmail.com", "K222222222");
+		service.enrollStudent(student2, course);
+		service.enrollStudent(student, course);
+		//Act
+		Vector<Student> result = service.listCourseStudents(course);
+		//Assert
+		assertNotNull(result);
+		assertEquals(2, result.size());
+		assertTrue(result.contains(student));
+		assertTrue(result.contains(student2));
+	}
+	
+	@Test
+	void testListCourseStudentFailure() {
+		//Arrange
+		
+		//Act
+		Vector<Student> result = service.listCourseStudents(course);
+		//Assert
+		assertNotNull(result);
+		assertEquals(0, result.size());
 	}
 }
