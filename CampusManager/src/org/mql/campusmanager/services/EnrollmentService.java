@@ -1,6 +1,9 @@
 package org.mql.campusmanager.services;
 
 import org.mql.campusmanager.models.Student;
+
+import java.util.Vector;
+
 import org.mql.campusmanager.models.Course;
 import org.mql.campusmanager.models.Enrollment;
 
@@ -86,29 +89,33 @@ public class EnrollmentService {
     }
     
     // 5. List all courses of a student
-    public void listStudentCourses(Student student) {
-        if (student.getEnrollments().isEmpty()) {
-            System.out.println(student.getFullName() + " is not enrolled in any courses.");
-            return;
+    public Vector<Course> listStudentCourses(Student student) {
+    	
+    	Vector<Course> courses = new Vector<>();
+    	
+    	if (student == null) {
+            return courses;
         }
-        System.out.println("Courses of " + student.getFullName() + ":");
+
         for (Enrollment enrollment : student.getEnrollments()) {
-            System.out.println("- " + enrollment.getCourse().getName());
+            courses.add(enrollment.getCourse());
         }
+
+        return courses;
     }
 
     // 6. List all students in a course
-    public void listCourseStudents(Course course) {
+    public Vector<Student> listCourseStudents(Course course) {
 
+    	Vector<Student> students = new Vector<>();
+    	
         if (course.getEnrollments().isEmpty()) {
-            System.out.println(course.getName() + " is empty or doesn't contain any students.");
-            return;
+            return students;
         }
-
-        System.out.println("Students of " + course.getName() + ":");
 
         for (Enrollment enrollment : course.getEnrollments()) {
-            System.out.println("- " + enrollment.getStudent().getFullName());
+            students.add(enrollment.getStudent());
         }
+        return students;
     }
 }
