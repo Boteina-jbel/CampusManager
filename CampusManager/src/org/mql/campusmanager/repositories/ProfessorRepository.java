@@ -15,4 +15,8 @@ public class ProfessorRepository {
     public boolean save(Professor professor) {
     	return professors.add(professor);
     }
+    
+    public boolean delete(Professor professor) {
+    	return professors.remove(professor);
+    }
 }
