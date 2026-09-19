@@ -37,5 +37,4 @@ public class Course {
 
     public void addEnrollment(Enrollment enrollment) { enrollments.add(enrollment); }
 
-    public boolean isFull() { return enrollments.size() >= capacity; }
 }
