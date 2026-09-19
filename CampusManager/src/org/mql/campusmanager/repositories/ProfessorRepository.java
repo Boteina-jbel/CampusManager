@@ -19,4 +19,19 @@ public class ProfessorRepository {
     public boolean delete(Professor professor) {
     	return professors.remove(professor);
     }
+    
+    public Professor findByMatricule(String matricule) {
+    	
+    	for(Professor professor : professors) {
+    		if(professor.getMatricule().equals(matricule)) {
+    			return professor;
+    		}
+    	}
+    	
+    	return null;
+    }
+    
+    public Vector<Professor> findAll() {
+    	return new Vector<>(professors);
+    }
 }
