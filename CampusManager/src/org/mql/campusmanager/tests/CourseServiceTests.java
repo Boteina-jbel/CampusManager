@@ -20,7 +20,7 @@ class CourseServiceTests {
 	void setUp() throws Exception {
 		service = new CourseService();
 		professor = new Professor("Loqman", "Loqman", "loqman@gmail.com", "LJ2825");
-		course = new Course("J201",  "Java", 2, 30, professor);
+		course = new Course("J201",  "Java", 2, 30);
 	}
 
 	@Test
@@ -39,7 +39,28 @@ class CourseServiceTests {
 		
 		//Act
 		boolean result = service.assignCourse(professor, course);
-		//Assert
-		assertTrue(result);
+		// Assert
+	    assertTrue(result);
+	    assertEquals(professor, course.getProfessor());
+	    assertTrue(professor.getCourses().contains(course));
+	}
+	
+	@Test
+	void testAssignCourseAlreadyAssignedToAnotherProfessor() {
+
+	    Professor professor2 =
+	            new Professor("Sara", "Amrani", "sara@gmail.com", "SA1234");
+
+	    service.assignCourse(professor, course);
+
+	    boolean result = service.assignCourse(professor2, course);
+
+	    assertFalse(result);
+	}
+	
+	@Test
+	void testAssignCourseNull() {
+	    assertFalse(service.assignCourse(null, course));
+	    assertFalse(service.assignCourse(professor, null));
 	}
 } 
