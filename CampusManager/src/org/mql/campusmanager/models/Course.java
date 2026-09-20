@@ -12,12 +12,11 @@ public class Course {
     private Professor professor;
     private List<Enrollment> enrollments;
 
-    public Course(String code, String name, int credits, int capacity, Professor professor) {
+    public Course(String code, String name, int credits, int capacity) {
         this.code = code;
         this.name = name;
         this.credits = credits;
         this.capacity = capacity;
-        this.professor = professor;
         this.enrollments = new Vector<>();
     }
 
