@@ -6,57 +6,59 @@ import java.util.Vector;
 import org.mql.campusmanager.models.Course;
 import org.mql.campusmanager.models.Department;
 import org.mql.campusmanager.models.Professor;
+import org.mql.campusmanager.repositories.DepartmentRepository;
 
 public class DepartmentService {
 	
-	private Vector<Department> departments;
+	private DepartmentRepository repository;
 	
 	public DepartmentService() {
-		departments = new Vector<>();
+		repository = new DepartmentRepository();
 	}
 	
 	public boolean addDepartment(Department department) {
-		for(Department d : departments) {
-			if(d.getName().equals(department.getName())) {
-				return false;
-			}
+		if(department == null) {
+			return false;
 		}
-		departments.add(department);
-		return true;
+		
+		if(repository.findByName(department.getName()) != null) {
+			return false;
+		}
+		
+		return repository.save(department);
 	}
 	
-	public boolean removeDepartment(String name) {
-		for(int i = 0; i < departments.size(); i++) {
-			if(departments.get(i).getName().equals(name)) {
-				departments.remove(i);
-                return true;
-			}
+	public boolean removeDepartment(Department department) {
+		if(department == null) {
+			return false;
 		}
-		return false;
+		
+		Department existingDepartment = repository.findByName(department.getName());
+		
+		if(existingDepartment == null) {
+			return false;
+		}
+		
+		return repository.delete(existingDepartment);
 	}
 	
 	public Department findDepartmentByName(String name) {
-		for(Department d : departments) {
-			if(d.getName().equals(name)) {
-				return d;
-			}
-		}
-		return null;
+		return repository.findByName(name);
 	}
 	
 	public Vector<Department> listAllDepartments(){
-		return new Vector<>(departments);
+		return repository.findAll();
 	}
 	
 	public boolean assignProfessorToDepartment(Professor professor, Department department) {
 	    if (professor == null || department == null) {
 	        return false;
 	    }
-	    for (Professor p : department.getProfessors()) {
-	        if (p.getMatricule().equals(professor.getMatricule())) {
-	            return false; // already assigned
-	        }
+
+	    if(department.getProfessors().contains(professor)) {
+	    	return false;
 	    }
+	    
 	    department.addProfessor(professor);
 	    return true;
 	}
@@ -65,13 +67,13 @@ public class DepartmentService {
 		if (course == null || department == null) {
 	        return false;
 	    }
-	    for (Course c : department.getCourses()) {
 
-	        if (c.getCode().equals(course.getCode())) {
-	            return false; // course already exists
-	        }
-	    }
+		if(department.getCourses().contains(course)) {
+			return false;
+		}
+		
 	    department.addCourse(course);
+	    
 	    return true;
 	}
 	
@@ -83,3 +85,4 @@ public class DepartmentService {
 		return new Vector<>(department.getCourses());
 	}
 }
+
