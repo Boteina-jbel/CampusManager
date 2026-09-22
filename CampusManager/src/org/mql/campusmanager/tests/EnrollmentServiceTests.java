@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mql.campusmanager.models.Course;
-import org.mql.campusmanager.models.Professor;
 import org.mql.campusmanager.models.Student;
 import org.mql.campusmanager.services.EnrollmentService;
 
@@ -17,14 +16,12 @@ class EnrollmentServiceTests {
 	private EnrollmentService service;
 	private Student student;
 	private Course course;
-	private Professor professor;
 
 	@BeforeEach
 	void setUp() throws Exception {
 		service = new EnrollmentService();
 		student = new Student("Boteina", "JBEL", "boteinajbel@gmail.com", "K111111111");
-		professor = new Professor("Loqman", "Loqman", "loqman@gmail.com", "LJ2825");
-		course = new Course("JS123", "JavaScript", 2, 1, professor);
+		course = new Course("JS123", "JavaScript", 2, 1);
 	}
 
 	@Test
@@ -56,13 +53,15 @@ class EnrollmentServiceTests {
 		boolean result = service.enrollStudent(student, course);
 		//Assert
 		assertTrue(result);
+		assertTrue(student.getEnrollments().size() == 1);
+		assertTrue(course.getEnrollments().size() == 1);
 	}
 	
 	@Test
 	void testEnrollStudentWithDifferentCourse() {
 	    // Arrange
-	    Course javaCourse = new Course("J101","Java", 2, 10, professor);
-	    Course jsCourse = new Course("JS123", "JavaScript", 2, 10, professor);
+	    Course javaCourse = new Course("J101","Java", 2, 10);
+	    Course jsCourse = new Course("JS123", "JavaScript", 2, 10);
 
 	    // Student enrolled in Java
 	    service.enrollStudent(student, javaCourse);
@@ -77,13 +76,14 @@ class EnrollmentServiceTests {
 	@Test
 	void testAssignGradeSuccess() {
 		//Arrange
-	    Course javaCourse = new Course("J101","Java", 2, 10, professor);
+	    Course javaCourse = new Course("J101","Java", 2, 10);
 	    service.enrollStudent(student, javaCourse);
 		service.enrollStudent(student, course);
 		//Act
 		boolean result = service.assignGrade(student, course, 15);
 		//Assert
 		assertTrue(result);
+		assertEquals(15, student.getEnrollments().get(1).getGrade());
 	}
 	
 	@Test
@@ -99,7 +99,7 @@ class EnrollmentServiceTests {
 	@Test
 	void testCalculateAverageSuccess() {
 		//Arrange
-		Course javaCourse = new Course("J101","Java", 2, 10, professor);
+		Course javaCourse = new Course("J101","Java", 2, 10);
 	    service.enrollStudent(student, javaCourse);
 		service.enrollStudent(student, course);
 		service.assignGrade(student, javaCourse, 15);
@@ -122,9 +122,9 @@ class EnrollmentServiceTests {
 	}
 	
 	@Test
-	void testIsAdmitedSuccess() {
+	void testIsAdmittedSuccess() {
 		//Arrange
-		Course javaCourse = new Course("J101","Java", 2, 10, professor);
+		Course javaCourse = new Course("J101","Java", 2, 10);
 	    service.enrollStudent(student, javaCourse);
 		service.enrollStudent(student, course);
 		service.assignGrade(student, javaCourse, 18);
@@ -137,9 +137,9 @@ class EnrollmentServiceTests {
 	}
 	
 	@Test
-	void testIsAdmitedFailure() {
+	void testIsAdmittedFailure() {
 		//Arrange
-		Course javaCourse = new Course("J101","Java", 2, 10, professor);
+		Course javaCourse = new Course("J101","Java", 2, 10);
 	    service.enrollStudent(student, javaCourse);
 		service.enrollStudent(student, course);
 		service.assignGrade(student, javaCourse, 9);
@@ -153,7 +153,7 @@ class EnrollmentServiceTests {
 	@Test
 	void testListStudentCoursesSuccess() {
 		//Arrange
-		Course javaCourse = new Course("J101","Java", 2, 10, professor);
+		Course javaCourse = new Course("J101","Java", 2, 10);
 	    service.enrollStudent(student, javaCourse);
 		service.enrollStudent(student, course);
 		//Act
@@ -179,7 +179,7 @@ class EnrollmentServiceTests {
 	@Test
 	void testListCourseStudentsSuccess() {
 		//Arrange
-		Course course = new Course("JS123", "JavaScript", 2, 10, professor);
+		Course course = new Course("JS123", "JavaScript", 2, 10);
 		Student student2 = new Student("Salma", "Salma", "salma@gmail.com", "K222222222");
 		service.enrollStudent(student2, course);
 		service.enrollStudent(student, course);
