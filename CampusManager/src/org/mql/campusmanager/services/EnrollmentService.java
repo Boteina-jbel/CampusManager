@@ -1,6 +1,7 @@
 package org.mql.campusmanager.services;
 
 import org.mql.campusmanager.models.Student;
+import org.mql.campusmanager.repositories.EnrollmentRepository;
 
 import java.util.Vector;
 
@@ -9,46 +10,53 @@ import org.mql.campusmanager.models.Enrollment;
 
 public class EnrollmentService {
 
+	private EnrollmentRepository repository;
+	
+	public EnrollmentService() {
+		repository = new EnrollmentRepository();
+	}
+	
 	// 1. Enroll a student in a course
     public boolean enrollStudent(Student student, Course course) {
-        // 1️ Check if student is already enrolled
-        for (Enrollment e : student.getEnrollments()) {
-            if (e.getCourse().equals(course)) {
-                System.out.println("Student " + student.getFullName() + " is already enrolled in " + course.getName());
-                return false;
-            }
-        }
-        // 2️ Check if course is full
+    	
+    	if(student == null || course== null) {
+    		return false;
+    	}
+    	
+    	Enrollment existingEnrollment =  repository.findByStudentAndCourse(student, course);
+    	if(existingEnrollment != null) {
+    		return false;
+    	}
+    	        
         if (course.getEnrollments().size() >= course.getCapacity()) {
-            System.out.println("Course " + course.getName() + " is full!");
             return false;
         }
-        // 3️ Create enrollment
+        
         Enrollment enrollment = new Enrollment(student, course);
-        // 4️ Add enrollment to student & course
+        
+        repository.save(enrollment);
+        
         student.addEnrollment(enrollment);
         course.addEnrollment(enrollment);
-        System.out.println("Student " + student.getFullName() + " enrolled in " + course.getName());
+
         return true;
     }
     
  // 2. Assign or update a grade (including rattrapage)
     public boolean assignGrade(Student student, Course course, double grade) {
-        // 1️ Find existing enrollment
-        for (Enrollment enrollment : student.getEnrollments()) {
-            if (enrollment.getCourse().equals(course)) {
-                // 2️ Update grade (first session or rattrapage)
-                enrollment.setGrade(grade);
-
-                System.out.println("Grade " + grade + " assigned to "
-                        + student.getFullName() + " for course "
-                        + course.getName());
-                return true; // stop after finding it
-            }
-        }
-        // 3️ If no enrollment found
-        System.out.println("Student is not enrolled in this course.");
-        return false;
+    	
+    	if (student == null || course == null) {
+    	    return false;
+    	}
+    	
+    	Enrollment existingEnrollment = repository.findByStudentAndCourse(student, course);
+    	
+    	if(existingEnrollment == null) {    		
+    		return false;
+    	}
+    	
+		existingEnrollment.setGrade(grade);
+        return true;
     }
 
 
@@ -57,6 +65,10 @@ public class EnrollmentService {
 
         double sum = 0;
         int count = 0;
+        
+        if (student == null) {
+            return 0;
+        }
 
         for (Enrollment enrollment : student.getEnrollments()) {
 
@@ -76,6 +88,10 @@ public class EnrollmentService {
     // 4. Check if student is admitted
     public boolean isAdmitted(Student student) {
 
+    	if (student == null) {
+    	    return false;
+    	}
+    	
         double average = calculateAverage(student);
         if (average >= 10) {
             System.out.println("Student " + student.getFullName() +
@@ -109,9 +125,9 @@ public class EnrollmentService {
 
     	Vector<Student> students = new Vector<>();
     	
-        if (course.getEnrollments().isEmpty()) {
-            return students;
-        }
+    	if (course == null) {
+    	    return students;
+    	}
 
         for (Enrollment enrollment : course.getEnrollments()) {
             students.add(enrollment.getStudent());
